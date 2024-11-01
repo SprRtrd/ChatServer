@@ -12,7 +12,7 @@ namespace ChatServer
     {
         static void Main(string[] args)
         {
-            string[] osoite = ["127.0.0.1", "8080"];
+            string[] osoite = ["http://127.0.0.1:8080/"];
             HttpListener listener = new HttpListener();
 
             foreach(string numero in osoite){
@@ -21,6 +21,9 @@ namespace ChatServer
 
             listener.Start();
             Console.WriteLine("Listening...");
+            HttpListenerContext context = listener.GetContext();
+            Console.WriteLine("{0}", context);
+            Console.ReadLine();
 
         }
     }

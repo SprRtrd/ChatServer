@@ -12,3 +12,4 @@ g:\Solution\ChatServer\obj\Debug\net8.0\refint\ChatServer.dll
 g:\Solution\ChatServer\obj\Debug\net8.0\ChatServer.pdb
 g:\Solution\ChatServer\obj\Debug\net8.0\ChatServer.genruntimeconfig.cache
 g:\Solution\ChatServer\obj\Debug\net8.0\ref\ChatServer.dll
+g:\Solution\ChatServer\obj\Debug\net8.0\ChatServer.sourcelink.json

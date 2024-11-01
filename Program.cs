@@ -22,8 +22,17 @@ namespace ChatServer
             listener.Start();
             Console.WriteLine("Listening...");
             HttpListenerContext context = listener.GetContext();
-            Console.WriteLine("{0}", context);
-            Console.ReadLine();
+            HttpListenerRequest request = context.Request;
+
+            HttpListenerResponse response = context.Response;
+
+            string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            response.ContentLength64 = buffer.Length;
+            System.IO.Stream output = response.OutputStream;
+            output.Write(buffer,0,buffer.Length);
+            output.Close();
+            Console.ReadLine();           
 
         }
     }

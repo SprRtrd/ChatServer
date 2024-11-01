@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "g:\\Solution\\ChatServer\\ChatServer.csproj": {}
+    "G:\\Solution\\ChatServer\\ChatServer.csproj": {}
   },
   "projects": {
-    "g:\\Solution\\ChatServer\\ChatServer.csproj": {
+    "G:\\Solution\\ChatServer\\ChatServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "g:\\Solution\\ChatServer\\ChatServer.csproj",
+        "projectUniqueName": "G:\\Solution\\ChatServer\\ChatServer.csproj",
         "projectName": "ChatServer",
-        "projectPath": "g:\\Solution\\ChatServer\\ChatServer.csproj",
+        "projectPath": "G:\\Solution\\ChatServer\\ChatServer.csproj",
         "packagesPath": "C:\\Users\\Olli\\.nuget\\packages\\",
-        "outputPath": "g:\\Solution\\ChatServer\\obj\\",
+        "outputPath": "G:\\Solution\\ChatServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Olli\\AppData\\Roaming\\NuGet\\NuGet.Config"

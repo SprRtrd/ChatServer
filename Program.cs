@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 
 namespace ChatServer
 {
@@ -25,13 +26,19 @@ namespace ChatServer
             HttpListenerRequest request = context.Request;
 
             HttpListenerResponse response = context.Response;
-
+            
             string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
-            System.IO.Stream output = response.OutputStream;
+            Stream output = response.OutputStream;
             output.Write(buffer,0,buffer.Length);
             output.Close();
+            Stream body = request.InputStream;
+            Encoding encoding = request.ContentEncoding;
+            StreamReader reader = new StreamReader(body, encoding);
+            
+
+            Console.WriteLine("{0}", body.Length);
             Console.ReadLine();           
 
         }

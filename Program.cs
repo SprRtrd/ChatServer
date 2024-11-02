@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using System.Data.SQLite;
+
 
 namespace ChatServer
 {
@@ -25,6 +27,11 @@ namespace ChatServer
             HttpListenerContext context = listener.GetContext();
             HttpListenerRequest request = context.Request;
 
+            Stream body = request.InputStream;
+            Encoding encoding = request.ContentEncoding;
+            StreamReader reader = new StreamReader(body, encoding);
+            string s = reader.ReadToEnd();
+
             HttpListenerResponse response = context.Response;
             
             string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
@@ -33,12 +40,13 @@ namespace ChatServer
             Stream output = response.OutputStream;
             output.Write(buffer,0,buffer.Length);
             output.Close();
-            Stream body = request.InputStream;
-            Encoding encoding = request.ContentEncoding;
-            StreamReader reader = new StreamReader(body, encoding);
+           
             
-
-            Console.WriteLine("{0}", body.Length);
+            
+            
+            
+            
+            Console.WriteLine("Lol {0}", s);
             Console.ReadLine();           
 
         }

@@ -15,8 +15,11 @@ namespace ChatServer
     {
         static void Main(string[] args)
         {
+            //TODO: oikeanlainen tietokanta viesteille. Mieti myös mitä muita tietoja tulee tallentaa, kuin viestin sisältö. 
             DatabaseHandler dbHandler = new DatabaseHandler();
             dbHandler.CreateDatabase();
+
+
             Console.WriteLine($"Database location: {Path.GetFullPath("viestit.db")}");
             string[] osoite = ["http://127.0.0.1:8080/"];
             HttpListener listener = new HttpListener();

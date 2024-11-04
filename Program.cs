@@ -15,8 +15,7 @@ namespace ChatServer
     {
         static void Main(string[] args)
         {
-            //TODO: oikeanlainen tietokanta viesteille. Mieti myös mitä muita tietoja tulee tallentaa, kuin viestin sisältö.
-            //Myös toinen pöytä käyttäjätunnuksille 
+            //TODO: Viestien tallennus tietokantaan. Käyttäjätunnusten luominen. Viestien esittäminen clientille
             DatabaseHandler dbHandler = new DatabaseHandler();
             dbHandler.CreateDatabase();
 

@@ -25,7 +25,7 @@ public class DatabaseHandler
         }
     }
     
-    public void LuoPoyta(string tableQuery, SQLiteConnection connection)
+    public static void LuoPoyta(string tableQuery, SQLiteConnection connection)
     {
         using (var command = new SQLiteCommand(tableQuery, connection))
             {

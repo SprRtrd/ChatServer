@@ -9,22 +9,30 @@ namespace ChatServer;
 public class DatabaseHandler
 {
 
-    private string _connectionString = "Data Source=viestit.db";
+    private string _connectionString = "Data Source=chat.db";
 
     public void CreateDatabase(){
         using (var connection = new SQLiteConnection(_connectionString)){
             
             connection.Open();
-            string tableQuery = "CREATE TABLE IF NOT EXISTS viestit (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)";
-            using (var command = new SQLiteCommand(tableQuery, connection))
-            {
-                command.ExecuteNonQuery();
-            }
+            string tableQuery1 = "CREATE TABLE IF NOT EXISTS viestit (lahettajaid INTEGER PRIMARY KEY, viestinumero INTEGER, viesti TEXT, timestamp DATETIME)";
+            string tableQuery2 = "CREATE TABLE IF NOT EXISTS kayttajat (lahettajaid INTEGER PRIMARY KEY, kayttajatunnus TEXT, salasana TEXT)";
+            LuoPoyta(tableQuery1, connection);
+            LuoPoyta(tableQuery2, connection);
+
+            
 
         }
     }
     
-      
+    public void LuoPoyta(string tableQuery, SQLiteConnection connection)
+    {
+        using (var command = new SQLiteCommand(tableQuery, connection))
+            {
+                command.ExecuteNonQuery();
+            }
+
+    }
     
 
 }

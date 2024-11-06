@@ -79,7 +79,7 @@ namespace ChatServer
                     WebSocketReceiveResult receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
                     if (receiveResult.MessageType == WebSocketMessageType.Text){
                         string receivedMessage = Encoding.UTF8.GetString(receiveBuffer, 0, receiveResult.Count);
-                        Console.WriteLine($"Received ,essage: {receivedMessage}");
+                        Console.WriteLine($"Received message: {receivedMessage}");
 
                         byte[] buffer = Encoding.UTF8.GetBytes("Hello from server");
                         await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);

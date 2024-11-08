@@ -17,7 +17,7 @@ namespace ChatServer
         static void Main(string[] args)
         {
             //TODO: Viestien tallennus tietokantaan. Käyttäjätunnusten luominen. Viestien esittäminen clientille
-            DatabaseHandler dbHandler = new DatabaseHandler();
+            DatabaseHandler dbHandler = new();
             dbHandler.CreateDatabase();
             
 
@@ -33,39 +33,22 @@ namespace ChatServer
             Console.WriteLine("Listening...");
             
             YhteydenTestaus(listener);
-          
-            
-            
-            
-            /*HttpListenerContext context = listener.GetContext();
-            HttpListenerRequest request = context.Request;
-
-            Stream body = request.InputStream;
-            Encoding encoding = request.ContentEncoding;
-            StreamReader reader = new StreamReader(body, encoding);
-            string s = reader.ReadToEnd();
-
-            HttpListenerResponse response = context.Response;
-            
-            string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
-            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-            response.ContentLength64 = buffer.Length;
-            Stream output = response.OutputStream;
-            output.Write(buffer,0,buffer.Length);
-            output.Close();*/
-           
-            
-            
-            
-            
-            
-
+        
             Console.ReadLine();           
 
         }
 
         static async void YhteydenTestaus(HttpListener listener){
-            while (true)
+            
+            HttpListenerContext context = await listener.GetContextAsync();
+            if (context.Request.IsWebSocketRequest){
+                WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
+                WebSocket webSocket = webSocketContext.WebSocket;
+                Console.WriteLine("Client connected");
+            }
+            
+            
+            /*while (true)
             {
                 HttpListenerContext context = await listener.GetContextAsync();
                 if (context.Request.IsWebSocketRequest){
@@ -96,7 +79,7 @@ namespace ChatServer
               
         
                 }
-            }
+            }*/
         }
     }
 }

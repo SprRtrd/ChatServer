@@ -66,12 +66,14 @@ namespace ChatServer
                     receiveResult.EndOfMessage,
                     CancellationToken.None);
 
+                string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+                dbHandler.LisaaViesti(viesti);
+                                
                 receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None
                 );
+                
 
-                string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
-                dbHandler.LisaaViesti(viesti);
             }
 
             await webSocket.CloseAsync(

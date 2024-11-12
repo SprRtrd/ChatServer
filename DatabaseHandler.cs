@@ -18,6 +18,7 @@ public class DatabaseHandler
             connection.Open();
             string tableQuery1 = "CREATE TABLE IF NOT EXISTS viestit (viesti_id INTEGER PRIMARY KEY, lahettaja TEXT, viesti TEXT, timestamp DATETIME)";
             LuoPoyta(tableQuery1, connection);
+            connection.Close();
         }
     }
     
@@ -32,8 +33,13 @@ public class DatabaseHandler
     
     public void LisaaViesti(string viesti){
         Viesti? avattuViesti = JsonSerializer.Deserialize<Viesti>(viesti);
-        string lisaysQuery = $"INSERT INTO viestit (lahettaja, viesti, timestamp) VALUES ({avattuViesti.Nimi}, {avattuViesti.Teksti}, {avattuViesti.TimeStamp})";
-        
+        DateTime myDateTime = DateTime.Now;
+        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+        string lisaysQuery = $"INSERT INTO viestit (lahettaja, viesti, timestamp) VALUES (\"{avattuViesti.Nimi}\", \"{avattuViesti.Teksti}\", \"{sqlFormattedDate}\")";
+        System.Console.WriteLine(sqlFormattedDate);
+        System.Console.WriteLine(avattuViesti.Teksti);
+
         try
         {
 
@@ -42,6 +48,7 @@ public class DatabaseHandler
             connection.Open();
             using var command = new SQLiteCommand(lisaysQuery, connection);
             var rowInserted = command.ExecuteNonQuery();
+            connection.Close();
         }
         }
         catch(SQLiteException ex)

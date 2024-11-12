@@ -14,9 +14,10 @@ namespace ChatServer
 {
     class Program
     {
+        static DatabaseHandler dbHandler = new();
         static void Main(string[] args)
         {
-            DatabaseHandler dbHandler = new();
+            
             dbHandler.CreateDatabase();
             
 
@@ -65,9 +66,12 @@ namespace ChatServer
                     receiveResult.EndOfMessage,
                     CancellationToken.None);
 
-                /*receiveResult = await webSocket.ReceiveAsync(
+                receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None
-                );*/
+                );
+
+                string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+                dbHandler.LisaaViesti(viesti);
             }
 
             await webSocket.CloseAsync(

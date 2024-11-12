@@ -3,6 +3,7 @@ using System.IO;
 using System.Data.SQLite;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.Marshalling;
+using System.Text.Json;
 
 namespace ChatServer;
 
@@ -29,7 +30,23 @@ public class DatabaseHandler
 
     }
     
-    public void LisaaViesti(){
+    public void LisaaViesti(string viesti){
+        Viesti? avattuViesti = JsonSerializer.Deserialize<Viesti>(viesti);
+        string lisaysQuery = $"INSERT INTO viestit (lahettaja, viesti, timestamp) VALUES ({avattuViesti.Nimi}, {avattuViesti.Teksti}, {avattuViesti.TimeStamp})";
         
+        try
+        {
+
+        
+        using (var connection = new SQLiteConnection(_connectionString)){
+            connection.Open();
+            using var command = new SQLiteCommand(lisaysQuery, connection);
+            var rowInserted = command.ExecuteNonQuery();
+        }
+        }
+        catch(SQLiteException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

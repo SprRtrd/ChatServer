@@ -16,7 +16,6 @@ namespace ChatServer
     {
         static void Main(string[] args)
         {
-            //TODO: Viestien tallennus tietokantaan. Käyttäjätunnusten luominen. Viestien esittäminen clientille
             DatabaseHandler dbHandler = new();
             dbHandler.CreateDatabase();
             
@@ -53,38 +52,6 @@ namespace ChatServer
             }
 
             
-            /*while (true)
-            {
-                HttpListenerContext context = await listener.GetContextAsync();
-                if (context.Request.IsWebSocketRequest){
-                WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
-                WebSocket webSocket = webSocketContext.WebSocket;
-
-                Console.WriteLine("Client connected");
-
-                byte[] receiveBuffer = new byte[1024];
-                if (webSocket.State == WebSocketState.Open){
-                    WebSocketReceiveResult receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
-                    if (receiveResult.MessageType == WebSocketMessageType.Text){
-                        string receivedMessage = Encoding.UTF8.GetString(receiveBuffer, 0, receiveResult.Count);
-                        Console.WriteLine($"Received message: {receivedMessage}");
-
-                        byte[] buffer = Encoding.UTF8.GetBytes("Hello from server");
-                        await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
-                    }
-                    else if (receiveResult.MessageType == WebSocketMessageType.Close){
-                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-                        Console.WriteLine("WebSocket closed");
-                    }
-                }
-              }
-              else{
-                context.Response.StatusCode = 400;
-                context.Response.Close();
-              
-        
-                }
-            }*/
         }
 
         private static async Task Echo(WebSocket webSocket){
@@ -98,9 +65,9 @@ namespace ChatServer
                     receiveResult.EndOfMessage,
                     CancellationToken.None);
 
-                receiveResult = await webSocket.ReceiveAsync(
+                /*receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None
-                );
+                );*/
             }
 
             await webSocket.CloseAsync(

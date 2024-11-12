@@ -15,13 +15,8 @@ public class DatabaseHandler
         using (var connection = new SQLiteConnection(_connectionString)){
             
             connection.Open();
-            string tableQuery1 = "CREATE TABLE IF NOT EXISTS viestit (lahettajaid INTEGER PRIMARY KEY, viestinumero INTEGER, viesti TEXT, timestamp DATETIME)";
-            string tableQuery2 = "CREATE TABLE IF NOT EXISTS kayttajat (lahettajaid INTEGER PRIMARY KEY, kayttajatunnus TEXT, salasana TEXT)";
+            string tableQuery1 = "CREATE TABLE IF NOT EXISTS viestit (viesti_id INTEGER PRIMARY KEY, lahettaja TEXT, viesti TEXT, timestamp DATETIME)";
             LuoPoyta(tableQuery1, connection);
-            LuoPoyta(tableQuery2, connection);
-
-            
-
         }
     }
     
@@ -34,5 +29,7 @@ public class DatabaseHandler
 
     }
     
-
+    public void LisaaViesti(){
+        
+    }
 }

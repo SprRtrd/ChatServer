@@ -33,9 +33,7 @@ public class DatabaseHandler
     
     public void LisaaViesti(string viesti){
         Viesti? avattuViesti = JsonSerializer.Deserialize<Viesti>(viesti);
-        DateTime myDateTime = DateTime.Now;
-        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-
+        string sqlFormattedDate = avattuViesti.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss");
         string lisaysQuery = $"INSERT INTO viestit (lahettaja, viesti, timestamp) VALUES (\"{avattuViesti.Nimi}\", \"{avattuViesti.Teksti}\", \"{sqlFormattedDate}\")";
         System.Console.WriteLine(sqlFormattedDate);
         System.Console.WriteLine(avattuViesti.Teksti);

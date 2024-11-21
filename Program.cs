@@ -20,8 +20,8 @@ namespace ChatServer
             
             dbHandler.CreateDatabase();
             
-
-
+            int viestiCount = dbHandler.ViimeisinId();
+            
             string[] osoite = ["http://127.0.0.1:8080/"];
             HttpListener listener = new();
 

@@ -28,15 +28,13 @@ public class DatabaseHandler
     }
     
     public void LisaaViesti(string viesti){
+
         Viesti? avattuViesti = JsonSerializer.Deserialize<Viesti>(viesti);
         string sqlFormattedDate = avattuViesti.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss");
         string lisaysQuery = $"INSERT INTO viestit (lahettaja, viesti, timestamp) VALUES (\'{avattuViesti.Nimi}\', \'{avattuViesti.Teksti}\', \'{sqlFormattedDate}\')";
 
         try
         {
-            /*var connection = new SQLiteConnection(_connectionString);
-            using var command = new SQLiteCommand(lisaysQuery, connection);
-            var rowInserted = command.ExecuteNonQuery(); */
             using var connection = new SQLiteConnection(_connectionString);
             connection.Open();
             using var command = new SQLiteCommand(lisaysQuery, connection);
@@ -46,6 +44,8 @@ public class DatabaseHandler
         {
             Console.WriteLine(ex.Message);
         }
+
+
     }
 
     public int ViimeisinId(){

@@ -56,26 +56,43 @@ namespace ChatServer
         }
 
         private static async Task Echo(WebSocket webSocket){
+
             byte[] buffer = new byte[1024 * 4];
             var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-            while(!receiveResult.CloseStatus.HasValue){
+            string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+            dbHandler.LisaaViesti(viesti);
+            int id = dbHandler.ViimeisinId();
+
+            buffer = Encoding.UTF8.GetBytes(id.ToString());
+
+            /*while(!receiveResult.CloseStatus.HasValue){
                 await webSocket.SendAsync(
                     new ArraySegment<byte>(buffer, 0, receiveResult.Count), 
                     receiveResult.MessageType,
                     receiveResult.EndOfMessage,
                     CancellationToken.None);
 
-                string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
-                dbHandler.LisaaViesti(viesti);
-                                
+                receiveResult = await webSocket.ReceiveAsync(
+                    new ArraySegment<byte>(buffer), CancellationToken.None
+                );
+                
+
+            }*/
+
+            while(!receiveResult.CloseStatus.HasValue){
+                await webSocket.SendAsync(
+                    new ArraySegment<byte>(buffer), 
+                    WebSocketMessageType.Text,
+                    true,
+                    CancellationToken.None);
+
                 receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None
                 );
                 
 
             }
-
             await webSocket.CloseAsync(
                 receiveResult.CloseStatus.Value,
                 receiveResult.CloseStatusDescription,

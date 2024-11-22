@@ -45,7 +45,12 @@ namespace ChatServer
                 WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
                 WebSocket webSocket = webSocketContext.WebSocket;
                 Console.WriteLine("Client connected");
-                await Echo(webSocket);
+                
+                // Lähettää viestin takaisin clientille
+                // await Echo(webSocket);
+
+                // 
+                await EchoUusi(webSocket);
             }
             else
             {
@@ -60,13 +65,7 @@ namespace ChatServer
             byte[] buffer = new byte[1024 * 4];
             var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-            string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
-            dbHandler.LisaaViesti(viesti);
-            int id = dbHandler.ViimeisinId();
-
-            buffer = Encoding.UTF8.GetBytes(id.ToString());
-            
-           /* while(!receiveResult.CloseStatus.HasValue){
+            while(!receiveResult.CloseStatus.HasValue){
                 await webSocket.SendAsync(
                     new ArraySegment<byte>(buffer, 0, receiveResult.Count), 
                     receiveResult.MessageType,
@@ -78,8 +77,27 @@ namespace ChatServer
                 );
                 
 
-            }*/
+            }
 
+            
+            await webSocket.CloseAsync(
+                receiveResult.CloseStatus.Value,
+                receiveResult.CloseStatusDescription,
+                CancellationToken.None
+            );
+        }
+
+        private static async Task EchoUusi(WebSocket webSocket){
+
+            byte[] buffer = new byte[1024 * 4];
+            var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+            string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+            dbHandler.LisaaViesti(viesti);
+            int id = dbHandler.ViimeisinId();
+
+            buffer = Encoding.UTF8.GetBytes(id.ToString());
+            
             while(!receiveResult.CloseStatus.HasValue){
                 await webSocket.SendAsync(
                     new ArraySegment<byte>(buffer), 
@@ -99,5 +117,9 @@ namespace ChatServer
                 CancellationToken.None
             );
         }
+    
     }
+
+    
+
 }

@@ -65,8 +65,8 @@ namespace ChatServer
             int id = dbHandler.ViimeisinId();
 
             buffer = Encoding.UTF8.GetBytes(id.ToString());
-
-            /*while(!receiveResult.CloseStatus.HasValue){
+            
+           /* while(!receiveResult.CloseStatus.HasValue){
                 await webSocket.SendAsync(
                     new ArraySegment<byte>(buffer, 0, receiveResult.Count), 
                     receiveResult.MessageType,

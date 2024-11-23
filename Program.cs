@@ -9,7 +9,9 @@ using System.Text.Json;
 using System.Data.SQLite;
 using System.Net.WebSockets;
 
-
+/*
+*TODO: ID:N LÄHETYS CLIENTILLE JA SEN KÄSITTELY CLIENTISSÄ
+*/
 namespace ChatServer
 {
     class Program
@@ -43,7 +45,8 @@ namespace ChatServer
                 WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
                 WebSocket webSocket = webSocketContext.WebSocket;
                 Console.WriteLine("Client connected");
-                
+                int id = dbHandler.ViimeisinId();
+                LahetaId(webSocket, id);               
                 // Lähettää viestin takaisin clientille
                 // await Echo(webSocket);
 
@@ -103,7 +106,7 @@ namespace ChatServer
                     WebSocketMessageType.Text,
                     true,
                     CancellationToken.None);
-
+                // Looppin myös id:n lähetys!!!! Tehdään myöhemmin 
                 receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None
                 );
@@ -124,7 +127,14 @@ namespace ChatServer
 
             string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
 
-    }
+            System.Console.WriteLine(viesti);
+        
+        }
+
+        static void LahetaId(WebSocket webSocket, int id)
+        {
+
+        }
 
     }
 

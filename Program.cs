@@ -20,8 +20,6 @@ namespace ChatServer
             
             dbHandler.CreateDatabase();
             
-            int viestiCount = dbHandler.ViimeisinId();
-            
             string[] osoite = ["http://127.0.0.1:8080/"];
             HttpListener listener = new();
 
@@ -50,7 +48,8 @@ namespace ChatServer
                 // await Echo(webSocket);
 
                 // 
-                await EchoUusi(webSocket);
+                // await EchoUusi(webSocket);
+                await ViestinVastaanotto(webSocket);
             }
             else
             {
@@ -117,7 +116,16 @@ namespace ChatServer
                 CancellationToken.None
             );
         }
-    
+
+        private static async Task ViestinVastaanotto(WebSocket webSocket){
+        
+            byte[] buffer = new byte[1024 * 4];
+            var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+            string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+
+    }
+
     }
 
     

@@ -125,9 +125,31 @@ namespace ChatServer
             byte[] buffer = new byte[1024 * 4];
             var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-            string viesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+            string vastaanotettuViesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+            Dictionary<string, string>? avattuViesti = JsonSerializer.Deserialize<Dictionary<string, string>>(vastaanotettuViesti);
+            if (avattuViesti != null && avattuViesti.TryGetValue("Tyyppi", out var tyyppi))
+            {
+                switch (tyyppi)
+                {
+                    case "Viesti":
+                    System.Console.WriteLine("Se oli viesti");
+                    break;
 
-            System.Console.WriteLine(viesti);
+                    case "Vertaus":
+                    System.Console.WriteLine("Se oli vertaus");
+                    break;
+                    
+                    default:
+                    break;
+                }
+            }
+            else
+            {
+                System.Console.WriteLine("Ei ollut mikään");
+            }
+
+
+            System.Console.WriteLine(avattuViesti);
         
         }
 

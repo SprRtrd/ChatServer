@@ -46,11 +46,11 @@ namespace ChatServer
                 WebSocket webSocket = webSocketContext.WebSocket;
                 Console.WriteLine("Client connected");
                 int id = dbHandler.ViimeisinId();
-                LahetaId(webSocket, id);               
+                // LahetaId(webSocket, id);               
                 // Lähettää viestin takaisin clientille
                 // await Echo(webSocket);
 
-                // 
+                
                 // await EchoUusi(webSocket);
                 await ViestinVastaanotto(webSocket);
             }
@@ -106,7 +106,7 @@ namespace ChatServer
                     WebSocketMessageType.Text,
                     true,
                     CancellationToken.None);
-                // Looppin myös id:n lähetys!!!! Tehdään myöhemmin 
+                // Looppiin myös id:n lähetys!!!! Tehdään myöhemmin 
                 receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None
                 );
@@ -131,11 +131,11 @@ namespace ChatServer
         
         }
 
-        static void LahetaId(WebSocket webSocket, int id)
+       /* static void LahetaId(WebSocket webSocket, int id)
         {
 
         }
-
+        */
     }
 
     

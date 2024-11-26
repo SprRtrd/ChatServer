@@ -127,7 +127,36 @@ namespace ChatServer
 
             string vastaanotettuViesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
             Dictionary<string, string>? avattuViesti = JsonSerializer.Deserialize<Dictionary<string, string>>(vastaanotettuViesti);
-            if (avattuViesti != null && avattuViesti.TryGetValue("Tyyppi", out var tyyppi))
+            ViestinKasittely(avattuViesti);
+
+            /*while(!receiveResult.CloseStatus.HasValue){
+                await webSocket.SendAsync(
+                    new ArraySegment<byte>(buffer, 0, receiveResult.Count), 
+                    receiveResult.MessageType,
+                    receiveResult.EndOfMessage,
+                    CancellationToken.None);
+
+                receiveResult = await webSocket.ReceiveAsync(
+                    new ArraySegment<byte>(buffer), CancellationToken.None
+                );
+                
+
+            }
+
+            
+            await webSocket.CloseAsync(
+                receiveResult.CloseStatus.Value,
+                receiveResult.CloseStatusDescription,
+                CancellationToken.None
+            );*/
+
+            System.Console.WriteLine(avattuViesti);
+        
+        }
+
+       public static void ViestinKasittely(Dictionary<string, string> avattuViesti)
+       {
+                        if (avattuViesti != null && avattuViesti.TryGetValue("Tyyppi", out var tyyppi))
             {
                 switch (tyyppi)
                 {
@@ -147,17 +176,7 @@ namespace ChatServer
             {
                 System.Console.WriteLine("Ei ollut mikään");
             }
-
-
-            System.Console.WriteLine(avattuViesti);
-        
-        }
-
-       /* static void LahetaId(WebSocket webSocket, int id)
-        {
-
-        }
-        */
+       }
     }
 
     

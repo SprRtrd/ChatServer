@@ -156,7 +156,7 @@ namespace ChatServer
 
        public static void ViestinKasittely(Dictionary<string, string> avattuViesti)
        {
-                        if (avattuViesti != null && avattuViesti.TryGetValue("Tyyppi", out var tyyppi))
+        if (avattuViesti != null && avattuViesti.TryGetValue("Tyyppi", out var tyyppi))
             {
                 switch (tyyppi)
                 {
@@ -166,6 +166,7 @@ namespace ChatServer
 
                     case "Vertaus":
                     System.Console.WriteLine("Se oli vertaus");
+                    Vertaa(avattuViesti);
                     break;
                     
                     default:
@@ -176,6 +177,19 @@ namespace ChatServer
             {
                 System.Console.WriteLine("Ei ollut mikään");
             }
+       }
+
+       public static void Vertaa(Dictionary<string, string> avattuViesti)
+       {
+            int serverId = dbHandler.ViimeisinId();
+            avattuViesti.TryGetValue("Id", out var id);
+            Int32.TryParse(id, out int viestiId);
+            if (serverId == viestiId)
+            {
+                return;
+            }
+
+            
        }
     }
 

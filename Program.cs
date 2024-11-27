@@ -127,7 +127,7 @@ namespace ChatServer
 
             string vastaanotettuViesti = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
             Dictionary<string, string>? avattuViesti = JsonSerializer.Deserialize<Dictionary<string, string>>(vastaanotettuViesti);
-            ViestinKasittely(avattuViesti);
+            ViestiController.ViestinKasittely(avattuViesti, dbHandler);
 
             /*while(!receiveResult.CloseStatus.HasValue){
                 await webSocket.SendAsync(
@@ -154,7 +154,7 @@ namespace ChatServer
         
         }
 
-       public static void ViestinKasittely(Dictionary<string, string> avattuViesti)
+       /*public static void ViestinKasittely(Dictionary<string, string> avattuViesti)
        {
         if (avattuViesti != null && avattuViesti.TryGetValue("Tyyppi", out var tyyppi))
             {
@@ -166,7 +166,7 @@ namespace ChatServer
 
                     case "Vertaus":
                     System.Console.WriteLine("Se oli vertaus");
-                    Vertaa(avattuViesti);
+                    ViestiController.Vertaa(avattuViesti, dbHandler);
                     break;
                     
                     default:
@@ -177,9 +177,9 @@ namespace ChatServer
             {
                 System.Console.WriteLine("Ei ollut mikään");
             }
-       }
+       }*/
 
-       public static void Vertaa(Dictionary<string, string> avattuViesti)
+       /*public static void Vertaa(Dictionary<string, string> avattuViesti)
        {
             int serverId = dbHandler.ViimeisinId();
             avattuViesti.TryGetValue("Id", out var id);
@@ -191,7 +191,7 @@ namespace ChatServer
 
             List<Dictionary<string, string>> viestit = new();
             viestit = dbHandler.HaeViestit(viestiId);
-       }
+       }*/
     }
 
     

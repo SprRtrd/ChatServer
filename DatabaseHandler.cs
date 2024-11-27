@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
 using System.Data;
+using System.Net.Sockets;
 
 namespace ChatServer;
 
@@ -72,6 +73,41 @@ public class DatabaseHandler
 
 
         return id;
+    }
+
+    public List<Dictionary<string, string>> HaeViestit(int id)
+    {
+
+        string hakuQuery = $"SELECT * FROM viestit WHERE viesti_id > {id}";
+        List<Dictionary<string, string>> viestit = new();
+
+        try{
+            using var connection = new SQLiteConnection(_connectionString);
+            connection.Open();
+            var command = new SQLiteCommand(hakuQuery, connection);
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string server_id = reader.GetInt32(0).ToString();
+                    string lahettaja = reader.GetString(1);
+                    string teksti = reader.GetString(2);
+                    string timeStamp = reader.GetString(3);
+                    Dictionary<string, string> viesti = new(){{"Tyyppi", "Viesti"}, 
+                    {"server_viesti_id", server_id}, 
+                    {"lahettaja", lahettaja}, 
+                    {"viesti", teksti}, 
+                    {"timestamp", timeStamp}};
+                    viestit.Add(viesti);
+                }
+            }
+        }
+    catch(SQLiteException ex)
+    {
+        System.Console.WriteLine(ex.Message);
+    }
+        return viestit;
     }
 
 }

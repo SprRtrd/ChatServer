@@ -189,7 +189,8 @@ namespace ChatServer
                 return;
             }
 
-            
+            List<Dictionary<string, string>> viestit = new();
+            viestit = dbHandler.HaeViestit(viestiId);
        }
     }
 
